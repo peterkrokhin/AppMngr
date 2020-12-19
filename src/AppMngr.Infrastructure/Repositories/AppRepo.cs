@@ -17,7 +17,7 @@ namespace AppMngr.Infrastructure
         public async Task<IEnumerable<AppDTO>> GetAllDTOAsync()
         {
             return await DbSet
-                .Select(a => new AppDTO()
+                .Select(a => new AppDTO
                 {
                     Id = a.Id,
                     Name = a.Name,
@@ -31,7 +31,7 @@ namespace AppMngr.Infrastructure
         {
             return await DbSet
                 .Where(a => a.Id == id)
-                .Select(a => new AppDTO()
+                .Select(a => new AppDTO
                 {
                     Id = a.Id,
                     Name = a.Name,

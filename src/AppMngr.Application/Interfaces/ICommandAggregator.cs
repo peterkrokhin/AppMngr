@@ -28,5 +28,7 @@ namespace AppMngr.Application
 
         Task ChangeStatusInAppAsync(int appId, JsonDocument doc);
         Task AddAppAsync(JsonDocument doc);
+
+        Task AddUserAsync(JsonDocument doc);
     }
 }

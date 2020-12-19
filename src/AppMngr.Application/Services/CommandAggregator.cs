@@ -322,6 +322,35 @@ namespace AppMngr.Application
             await UOW.SaveChangesAsync();
         }
 
+        public async Task AddUserAsync(JsonDocument doc)
+        {
+            JsonElement root = doc.RootElement;
+
+            string name = root.GetProperty("name").GetString();
+            if (name == null)
+                throw new Exception("Свойство name: не допускается значение null");
+
+            string pwd = root.GetProperty("pwd").GetString();
+            if (pwd == null)
+                throw new Exception("Свойство pwd: не допускается значение null");
+
+            int roleId = root.GetProperty("roleId").GetInt32();
+
+            Role role = await UOW.Roles.GetByIdAsync(roleId);
+            if (role == null)
+                throw new Exception($"Свойство roleId: не найдена роль id={roleId}");
+
+            User user = new User()
+            {
+                Name = name,
+                PwdHash = Utils.GetHashOrEmpty(pwd),
+                RoleId = roleId 
+            };
+
+            await UOW.Users.AddAsync(user);
+            await UOW.SaveChangesAsync();
+        }
+
         private bool disposed = false;
 
         public virtual void Dispose(bool disposing)
