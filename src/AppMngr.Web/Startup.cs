@@ -10,10 +10,12 @@ using Microsoft.Extensions.Hosting;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 using Microsoft.Extensions.Configuration;
 using AppMngr.Application;
-using  AppMngr.Infrastructure;
+using AppMngr.Infrastructure;
+
 
 namespace AppMngr.Web
 {
@@ -42,11 +44,11 @@ namespace AppMngr.Web
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
                             ValidateIssuer = true,
-                            ValidIssuer = AuthOptions.ISSUER,
+                            ValidIssuer = Configuration["JWT:Issuer"],
                             ValidateAudience = true,
-                            ValidAudience = AuthOptions.AUDIENCE,
+                            ValidAudience = Configuration["JWT:Audience"],
                             ValidateLifetime = true,
-                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Key"])),
                             ValidateIssuerSigningKey = true,
                         };
                     });

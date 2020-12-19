@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AppMngr.Application;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppMngr.Web
 {
@@ -24,6 +25,7 @@ namespace AppMngr.Web
         }
 
         // GET api/apps
+        [Authorize(Roles="admin, client")]
         [HttpGet("apps")]
         public async Task<IActionResult> Get()
         {
@@ -32,6 +34,7 @@ namespace AppMngr.Web
         }
 
         // PATCH api/apps/{id}/status
+        [Authorize(Roles="admin")]
         [HttpPatch("apps/{appId:int}/status")]
         public async Task<IActionResult> PatchStatus(int appId, JsonDocument doc)
         {
@@ -42,6 +45,7 @@ namespace AppMngr.Web
         }
 
         // POST api/apps
+        [Authorize(Roles="client")]
         [HttpPost("apps")]
         public async Task<IActionResult> Post(JsonDocument doc)
         {
