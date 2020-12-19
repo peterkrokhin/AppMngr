@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/RequestManagementSystem.Web/bin/Debug/netcoreapp3.1/RequestManagementSystem.Web.dll",
+            "program": "${workspaceFolder}/src/AppMngr.Web/bin/Debug/netcoreapp3.1/AppMngr.Web.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/RequestManagementSystem.Web",
+            "cwd": "${workspaceFolder}/src/AppMngr.Web",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

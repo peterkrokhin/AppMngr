@@ -15,6 +15,10 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using AppMngr.Application;
 using AppMngr.Infrastructure;
+using Microsoft.OpenApi.Models;
+
+using System.Reflection;
+using System.IO;
 
 
 namespace AppMngr.Web
@@ -52,6 +56,24 @@ namespace AppMngr.Web
                             ValidateIssuerSigningKey = true,
                         };
                     });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Web API AppMngr",
+                    Description = "Web API системы управления заявками",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "peterkrokhin",
+                    }, 
+                });
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +88,12 @@ namespace AppMngr.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppMngr Web API");
+            });
 
             app.UseEndpoints(endpoints =>
             {

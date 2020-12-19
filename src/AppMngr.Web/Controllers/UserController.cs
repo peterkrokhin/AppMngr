@@ -24,12 +24,26 @@ namespace AppMngr.Web
             CommandAggregator = commandAggregator;
         }
 
+
+        /// <summary>Просмотр пользователей (admin)</summary>
         // GET api/users
         [Authorize(Roles="admin")]
         [HttpGet("users")]
         public async Task<IActionResult> Get() =>
             Ok(await Users.GetAllDTOAsync());
 
+
+        /// <summary>Добавление пользователя (admin)</summary>
+        /// <remarks>
+        /// Sample request body:
+        ///
+        ///     {
+        ///        "name": "UserName", //not null, required
+        ///        "pwd": "UserPwd", // not null, required
+        ///        "roleId": 1 // not null, required
+        ///     }
+        ///
+        /// </remarks>
         // POST api/users
         [Authorize(Roles="admin")]
         [HttpPost("users")]

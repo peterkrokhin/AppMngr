@@ -34,6 +34,27 @@ namespace AppMngr.Web
             Configuration = configuration;
         }
 
+        /// <summary>Получение токена</summary>
+        /// <remarks>
+        /// Sample request body:
+        ///
+        ///     {
+        ///        "name": "UserName", //not null, required
+        ///        "pwd": "UserPwd"    // not null, required
+        ///     }
+        ///
+        ///     Администратор по умолчанию
+        ///     {
+        ///        "name": "default_admin",
+        ///        "pwd": "default_pwd"
+        ///     }
+        ///
+        ///     Клиент по умолчанию
+        ///     {
+        ///        "name": "default_client",
+        ///        "pwd": "default_pwd"
+        ///     }  
+        /// </remarks>
         // POST api/token  
         [HttpPost("token")]
         public async Task<IActionResult> Token(JsonDocument doc)
@@ -81,7 +102,8 @@ namespace AppMngr.Web
             
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name),
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

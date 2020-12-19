@@ -8,7 +8,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/RequestManagementSystem.Web/RequestManagementSystem.Web.csproj",
+                "${workspaceFolder}/src/AppMngr.Web/AppMngr.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -21,7 +21,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/RequestManagementSystem.Web/RequestManagementSystem.Web.csproj",
+                "${workspaceFolder}/src/AppMngr.Web/AppMngr.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -35,7 +35,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/RequestManagementSystem.Web/RequestManagementSystem.Web.csproj",
+                "${workspaceFolder}/src/AppMngr.Web/AppMngr.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
