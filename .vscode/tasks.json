@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            //"command": "dotnet",
+            "command": "/home/pit/dotnet/dotnet31/dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/RequestManagementSystem.Web/RequestManagementSystem.Web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            //"command": "dotnet",
+            "command": "/home/pit/dotnet/dotnet31/dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/RequestManagementSystem.Web/RequestManagementSystem.Web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            //"command": "dotnet",
+            "command": "/home/pit/dotnet/dotnet31/dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/src/RequestManagementSystem.Web/RequestManagementSystem.Web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
