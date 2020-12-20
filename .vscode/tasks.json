@@ -3,8 +3,7 @@
     "tasks": [
         {
             "label": "build",
-            //"command": "dotnet",
-            "command": "/home/pit/dotnet/dotnet31/dotnet",
+            "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
@@ -16,8 +15,7 @@
         },
         {
             "label": "publish",
-            //"command": "dotnet",
-            "command": "/home/pit/dotnet/dotnet31/dotnet",
+            "command": "dotnet",
             "type": "process",
             "args": [
                 "publish",
@@ -29,8 +27,7 @@
         },
         {
             "label": "watch",
-            //"command": "dotnet",
-            "command": "/home/pit/dotnet/dotnet31/dotnet",
+            "command": "dotnet",
             "type": "process",
             "args": [
                 "watch",

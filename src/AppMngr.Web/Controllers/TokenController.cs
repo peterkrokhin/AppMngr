@@ -36,20 +36,21 @@ namespace AppMngr.Web
 
         /// <summary>Получение токена</summary>
         /// <remarks>
-        /// Sample request body:
+        /// Описание и примеры запросов:
         ///
+        ///     Описание запроса:
         ///     {
-        ///        "name": "UserName", //not null, required
-        ///        "pwd": "UserPwd"    // not null, required
+        ///        "name": "UserName", // Имя пользователя, not null, required
+        ///        "pwd": "UserPwd"    // Пароль пользователя, not null, required
         ///     }
         ///
-        ///     Администратор по умолчанию
+        ///     Администратор по умолчанию:
         ///     {
         ///        "name": "default_admin",
         ///        "pwd": "default_pwd"
         ///     }
         ///
-        ///     Клиент по умолчанию
+        ///     Клиент по умолчанию:
         ///     {
         ///        "name": "default_client",
         ///        "pwd": "default_pwd"
@@ -59,36 +60,35 @@ namespace AppMngr.Web
         [HttpPost("token")]
         public async Task<IActionResult> Token(JsonDocument doc)
         {
-            JsonElement root = doc.RootElement;
-            string name = root.GetProperty("name").GetString();
-            string pwd = root.GetProperty("pwd").GetString();
-
-            ClaimsIdentity identity;
             try
             {
-                identity = await TryGetIdentityAsync(name, pwd);
+                JsonElement root = doc.RootElement;
+                string name = root.GetProperty("name").GetString();
+                string pwd = root.GetProperty("pwd").GetString();
+
+                ClaimsIdentity identity = await TryGetIdentityAsync(name, pwd);
+                
+                var now = DateTime.UtcNow;
+                
+                // Получаем JWT
+                var jwt = new JwtSecurityToken(
+                        issuer: Configuration["JWT:Issuer"],
+                        audience: Configuration["JWT:Audience"],
+                        notBefore: now,
+                        claims: identity.Claims,
+                        expires: now.Add(TimeSpan.FromMinutes(double.Parse(Configuration["JWT:LifeTime"]))),
+                        signingCredentials: 
+                            new SigningCredentials(
+                                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Key"])), SecurityAlgorithms.HmacSha256));
+                
+                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+    
+                return Ok(new {token = encodedJwt, name = identity.Name});
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest("Invalid user name or password");
+                return BadRequest(e.Message);
             }
-            
-            var now = DateTime.UtcNow;
-            
-            // Получаем JWT
-            var jwt = new JwtSecurityToken(
-                    issuer: Configuration["JWT:Issuer"],
-                    audience: Configuration["JWT:Audience"],
-                    notBefore: now,
-                    claims: identity.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(double.Parse(Configuration["JWT:LifeTime"]))),
-                    signingCredentials: 
-                        new SigningCredentials(
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Key"])), SecurityAlgorithms.HmacSha256));
-            
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
- 
-            return Ok(new {token = encodedJwt, name = identity.Name});
         }
  
         private async Task<ClaimsIdentity> TryGetIdentityAsync(string name, string pwd)

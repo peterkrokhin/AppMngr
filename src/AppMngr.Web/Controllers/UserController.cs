@@ -29,18 +29,35 @@ namespace AppMngr.Web
         // GET api/users
         [Authorize(Roles="admin")]
         [HttpGet("users")]
-        public async Task<IActionResult> Get() =>
-            Ok(await Users.GetAllDTOAsync());
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                return Ok(await Users.GetAllDTOAsync());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
 
         /// <summary>Добавление пользователя (admin)</summary>
         /// <remarks>
-        /// Sample request body:
+        /// Описание и примеры запросов:
         ///
+        ///     Описание запроса:
         ///     {
-        ///        "name": "UserName", //not null, required
-        ///        "pwd": "UserPwd", // not null, required
-        ///        "roleId": 1 // not null, required
+        ///        "name": "UserName", // Имя пользователя, not null, required
+        ///        "pwd": "UserPwd",   // Пароль пользователя, not null, required
+        ///        "roleId": 1         // Id роли, not null, required
+        ///     }
+        ///
+        ///     Пример:
+        ///     {
+        ///        "name": "UserName",
+        ///        "pwd": "UserPwd",
+        ///        "roleId": 1
         ///     }
         ///
         /// </remarks>
@@ -49,8 +66,15 @@ namespace AppMngr.Web
         [HttpPost("users")]
         public async Task<IActionResult> Post(JsonDocument doc)
         {
-            await CommandAggregator.AddUserAsync(doc);
-            return Ok(await Users.GetAllDTOAsync());
+            try
+            {
+                await CommandAggregator.AddUserAsync(doc);
+                return Ok(await Users.GetAllDTOAsync());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
     }
