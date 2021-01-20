@@ -1,44 +1,44 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 using AppMngr.Application;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
-
+using MediatR;
+using System.Collections.Generic;
 
 namespace AppMngr.Web
 {
     [ApiController]
-    [Route("api/")]
-    public class UserController : Controller
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
     {
-        IUserRepo Users { get; set; }
-        ICommandAggregator CommandAggregator { get; set; }
+        private readonly IMediator _mediator;
 
-        public UserController(IUserRepo users, ICommandAggregator commandAggregator)
+        public UserController(IMediator mediator)
         {  
-            Users = users;
-            CommandAggregator = commandAggregator;
+            _mediator = mediator;
         }
 
 
         /// <summary>Просмотр пользователей (admin)</summary>
-        // GET api/users
         [Authorize(Roles="admin")]
-        [HttpGet("users")]
-        public async Task<IActionResult> Get()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GetAllUsersResponse>>> GetUsers()
         {
-            try
-            {
-                return Ok(await Users.GetAllDTOAsync());
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var query = new GetAllUsersQuery();
+            return Ok(await _mediator.Send(query));
+        }
+
+        /// <summary>Просмотр пользователя по Id (admin)</summary>
+        [Authorize(Roles="admin")]
+        [HttpGet("{userId:long}")]
+        public async Task<ActionResult<GetUserByIdResponse>> GetUser(long userId)
+        {
+            var query = new GetUserByIdQuery(userId);
+            return Ok(await _mediator.Send(query));
         }
 
 
@@ -63,18 +63,12 @@ namespace AppMngr.Web
         /// </remarks>
         // POST api/users
         [Authorize(Roles="admin")]
-        [HttpPost("users")]
-        public async Task<IActionResult> Post(JsonDocument doc)
+        [HttpPost]
+        public async Task<ActionResult<GetUserByIdResponse>> PostUser(CreateUserCommand command)
         {
-            try
-            {
-                await CommandAggregator.AddUserAsync(doc);
-                return Ok(await Users.GetAllDTOAsync());
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var user = await _mediator.Send(command);
+
+            return CreatedAtAction(nameof(GetUser), new {id = user.Id}, user);
         }
 
     }

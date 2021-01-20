@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppMngr.Core
+﻿namespace AppMngr.Core
 {
     public class App
     {

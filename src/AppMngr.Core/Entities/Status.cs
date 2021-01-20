@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AppMngr.Core
+﻿namespace AppMngr.Core
 {
     public class Status
     {

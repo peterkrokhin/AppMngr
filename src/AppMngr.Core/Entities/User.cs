@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppMngr.Core
+﻿namespace AppMngr.Core
 {
     public class User
     {
@@ -10,6 +8,5 @@ namespace AppMngr.Core
 
         public int RoleId { get; set; }
         public Role Role { get; set; }
-        
     }
 }
