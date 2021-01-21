@@ -19,7 +19,7 @@ using Microsoft.OpenApi.Models;
 
 using System.Reflection;
 using System.IO;
-
+using ClinicSchedule.Application;
 
 namespace AppMngr.Web
 {
@@ -37,6 +37,8 @@ namespace AppMngr.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddAppServices();
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection"); 
             services.AddAppInfrastructure(connectionString);

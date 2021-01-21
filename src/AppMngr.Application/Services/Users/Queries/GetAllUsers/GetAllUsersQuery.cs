@@ -3,8 +3,7 @@ using MediatR;
 
 namespace AppMngr.Application
 {
-    public class GetAllUsersQuery : IRequest<IEnumerable<UserDTO>>
+    public class GetAllUsersQuery : IRequest<IEnumerable<UserDto>>
     {
-
     }
 }

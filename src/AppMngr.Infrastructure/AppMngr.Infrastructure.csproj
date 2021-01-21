@@ -6,7 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="3.1.11" />
   </ItemGroup>
 
   <PropertyGroup>
