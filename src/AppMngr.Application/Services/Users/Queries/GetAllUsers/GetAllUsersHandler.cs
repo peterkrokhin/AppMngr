@@ -19,7 +19,7 @@ namespace AppMngr.Application
         }
         public async Task<IEnumerable<UserDto>> Handle(GetAllUsersQuery query, CancellationToken cancellationToken)
         {
-            var users = await _users.GetAllAsync();
+            var users = await _users.GetAllIncludeRoleAsync();
             var usersDto = _mapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(users);
             return usersDto;
         }

@@ -3,11 +3,12 @@ using AppMngr.Core;
 
 namespace AppMngr.Application
 {
-    public class UserDtoProfile : Profile
+    public class DtoProfile : Profile
     {
-        public UserDtoProfile()
+        public DtoProfile()
         {
             CreateMap<User, UserDto>();
+            CreateMap<Role, RoleDto>();
         }
     }
 }

@@ -8,5 +8,7 @@ namespace AppMngr.Application
     {
         Task<User> GetByNameAndPwdHash(string name, string pwdHash);
         Task<IEnumerable<UserDTO>> GetAllDTOAsync();
+        Task<User> GetByIdIncludeRoleAsync(int id);
+        Task<IEnumerable<User>> GetAllIncludeRoleAsync();
     }
 }

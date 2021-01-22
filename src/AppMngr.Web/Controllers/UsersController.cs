@@ -1,12 +1,8 @@
-using System;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
-using AppMngr.Application;
-using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
-using MediatR;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using AppMngr.Application;
 
 namespace AppMngr.Web
 {
@@ -43,11 +39,14 @@ namespace AppMngr.Web
         /// <summary>Добавление пользователя (admin)</summary>
         // [Authorize(Roles="admin")]
         [HttpPost]
-        public async Task<ActionResult<UserDto>> PostUser(CreateUserCommand command)
+        public async Task<ActionResult<UserDto>> CreateUser(CreateUserCommand command)
         {
             var user = await _mediator.Send(command);
 
-            return CreatedAtAction(nameof(GetUser), new {id = user.Id}, user);
+            return CreatedAtAction(
+                nameof(GetUser), 
+                new {userId = user.Id}, 
+                user);
         }
     }
 }

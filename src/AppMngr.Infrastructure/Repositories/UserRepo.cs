@@ -32,5 +32,26 @@ namespace AppMngr.Infrastructure
                 })
                 .ToListAsync();
         }
+
+        public async Task<User> GetByIdIncludeRoleAsync(int id)
+        {
+            var user = await DbSet
+                .Include(u => u.Role)
+                .Where(u => u.Id == id)
+                .Select(u => u)
+                .FirstOrDefaultAsync();
+            
+            return user;
+        }
+
+        public async Task<IEnumerable<User>> GetAllIncludeRoleAsync()
+        {
+            var users = await DbSet
+                .Include(u => u.Role)
+                .Select(u => u)
+                .ToListAsync();
+
+            return users;
+        }
     }
 }

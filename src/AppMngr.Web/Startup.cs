@@ -20,6 +20,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
 using ClinicSchedule.Application;
+using FluentValidation.AspNetCore;
 
 namespace AppMngr.Web
 {
@@ -36,7 +37,8 @@ namespace AppMngr.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation();
 
             services.AddAppServices();
 

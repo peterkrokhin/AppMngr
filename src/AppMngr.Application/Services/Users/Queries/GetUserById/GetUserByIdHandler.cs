@@ -18,7 +18,13 @@ namespace AppMngr.Application
 
         public async Task<UserDto> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
         {
-            var user = await _users.GetByIdAsync(query.Id);
+            var user = await _users.GetByIdIncludeRoleAsync(query.Id);
+
+            if (user == null)
+            {
+                throw new UserNotFoundException($"User c Id={query.Id} не найден.");
+            }
+            
             var userDto = _mapper.Map<UserDto>(user);
             return userDto;
         }
