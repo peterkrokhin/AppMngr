@@ -12,8 +12,9 @@ using Microsoft.AspNetCore.Authorization;
 namespace AppMngr.Web
 {
     [ApiController]
-    [Route("api/")]
-    public class AppController : Controller
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Route("api/[controller]")]
+    public class AppController : ControllerBase
     {
         private IAppRepo Apps { get; set; }
         private ICommandAggregator CommandAggregator { get; set; }
@@ -25,10 +26,9 @@ namespace AppMngr.Web
         }
 
         /// <summary>Просмотр заявок (admin, client)</summary>
-        // GET api/apps
-        [Authorize(Roles="admin, client")]
+        // [Authorize(Roles="admin, client")]
         [HttpGet("apps")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetApps()
         {
             try
             {

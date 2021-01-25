@@ -9,6 +9,7 @@ namespace AppMngr.Application
         {
             CreateMap<User, UserDto>();
             CreateMap<Role, RoleDto>();
+            CreateMap<App, AppDto>();
         }
     }
 }
