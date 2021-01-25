@@ -18,7 +18,7 @@ namespace AppMngr.Application
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<AppDto>> Handle(GetAllAppsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<AppDto>> Handle(GetAllAppsQuery query, CancellationToken cancellationToken)
         {
             var apps = await _apps.GetAllAsync();
             var appsDto = _mapper.Map<IEnumerable<App>, IEnumerable<AppDto>>(apps);
