@@ -7,9 +7,16 @@ namespace AppMngr.Application
     {
         public DtoProfile()
         {
-            CreateMap<User, UserDto>();
-            CreateMap<Role, RoleDto>();
             CreateMap<App, AppDto>();
+            CreateMap<AppType, AppTypeDto>();
+            CreateMap<DateField, DateFieldDto>();
+            CreateMap<FileField, FileFieldDto>();
+            CreateMap<NumField, NumFieldDto>();
+            CreateMap<Role, RoleDto>();
+            CreateMap<Status, StatusDto>();
+            CreateMap<StringField, StringFieldDto>();
+            CreateMap<TimeField, TimeFieldDto>();
+            CreateMap<User, UserDto>();
         }
     }
 }

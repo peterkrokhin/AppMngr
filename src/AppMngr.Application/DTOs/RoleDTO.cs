@@ -1,6 +1,8 @@
-﻿namespace AppMngr.Application
+﻿using System;
+
+namespace AppMngr.Application
 {
-    public class RoleDto
+    public class RoleDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

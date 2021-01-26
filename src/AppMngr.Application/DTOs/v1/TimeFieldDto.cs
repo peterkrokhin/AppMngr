@@ -2,11 +2,11 @@
 
 namespace AppMngr.Application
 {
-    public class AppDTO
+    public class TimeFieldDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public DateTime Value { get; set; }
         public int AppTypeId { get; set; }
-        public int StatusId { get; set; }
+
     }
 }
