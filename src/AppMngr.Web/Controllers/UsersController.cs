@@ -18,7 +18,7 @@ namespace AppMngr.Web
             _mediator = mediator;
         }
 
-        /// <summary>Просмотр пользователей (admin)</summary>
+        /// <summary>Вернуть всех пользователей (admin)</summary>
         // [Authorize(Roles="admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
@@ -27,7 +27,7 @@ namespace AppMngr.Web
             return Ok(await _mediator.Send(query));
         }
 
-        /// <summary>Просмотр пользователя по Id (admin)</summary>
+        /// <summary>Вернуть пользователя по Id (admin)</summary>
         // [Authorize(Roles="admin")]
         [HttpGet("{userId:int}")]
         public async Task<ActionResult<UserDto>> GetUser(int userId)
@@ -36,7 +36,7 @@ namespace AppMngr.Web
             return Ok(await _mediator.Send(query));
         }
 
-        /// <summary>Добавление пользователя (admin)</summary>
+        /// <summary>Добавить пользователя (admin)</summary>
         // [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserCommand command)

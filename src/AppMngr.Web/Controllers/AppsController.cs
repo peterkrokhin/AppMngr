@@ -8,6 +8,7 @@ using AppMngr.Application;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
+using MediatR;
 
 namespace AppMngr.Web
 {
@@ -16,30 +17,51 @@ namespace AppMngr.Web
     [Route("api/[controller]")]
     public class AppController : ControllerBase
     {
-        private IAppRepo Apps { get; set; }
-        private ICommandAggregator CommandAggregator { get; set; }
+        private IMediator _mediator; 
 
-        public AppController(IAppRepo apps, ICommandAggregator commandAggregator)
+        public AppController(IMediator mediator)
         {
-            Apps = apps;
-            CommandAggregator = commandAggregator;
+            _mediator = mediator;
         }
 
-        /// <summary>Просмотр заявок (admin, client)</summary>
+        /// <summary>Вернуть все заявки (admin, client)</summary>
         // [Authorize(Roles="admin, client")]
-        [HttpGet("apps")]
-        public async Task<IActionResult> GetApps()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AppDto>>> GetApps()
         {
-            try
-            {
-                var apps = await Apps.GetAllDTOAsync();
-                return Ok(apps);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var query = new GetAllAppsQuery();
+            return Ok(await _mediator.Send(query));
         }
+
+        /// <summary>Вернуть заявку по Id (admin, client)</summary>
+        // [Authorize(Roles="admin, client")]
+        [HttpGet("{appId:int}")]
+        public async Task<ActionResult<AppDto>> GetApp(int appId)
+        {
+            var query = new GetAppByIdQuery(appId);
+            return Ok(await _mediator.Send(query));
+        }
+
+        /// <summary>Добавить новую заявку (client)</summary>
+        // [Authorize(Roles="client")]
+        [HttpPost]
+        public async Task<ActionResult<AppDto>> CreateApp(CreateAppCommand command)
+        {
+            var app = await _mediator.Send(command);
+
+            return CreatedAtAction(
+                nameof(GetApp),
+                new {appId = app.Id},
+                app);
+        }
+
+
+
+
+
+
+
+
 
         /// <summary>Изменение статуса заявки (admin)</summary>
         /// <remarks>
@@ -75,44 +97,5 @@ namespace AppMngr.Web
                 return BadRequest(e.Message);
             }
         }
-
-        /// <summary>Добавление новой заявки (client)</summary>
-        /// <remarks>
-        /// Описание и примеры запросов:
-        ///
-        ///     Описание запроса:
-        ///     {
-        ///        "name": "AppName",   // Имя заявки, not null, required
-        ///        "appTypeId": 1,      // Id типа заявки, not null, required
-        ///        "statusId": 1        // Id статуса, not null, required
-        ///     }
-        ///
-        ///     Пример:
-        ///     {
-        ///        "name": "Заявка 1",
-        ///        "appTypeId": 1,
-        ///        "statusId": 1
-        ///     }
-        ///
-        /// </remarks>
-        /// <param name="doc"></param>
-        // POST api/apps
-        [Authorize(Roles="client")]
-        [HttpPost("apps")]
-        public async Task<IActionResult> Post(JsonDocument doc)
-        {
-            try
-            {
-                await CommandAggregator.AddAppAsync(doc);
-
-                var apps = await Apps.GetAllDTOAsync();
-                return Ok(apps);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
     }
 }
