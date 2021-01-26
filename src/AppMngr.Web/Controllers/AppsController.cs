@@ -1,14 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-
-using AppMngr.Application;
-using Microsoft.Extensions.Logging;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using AppMngr.Application;
 
 namespace AppMngr.Web
 {
@@ -35,7 +30,7 @@ namespace AppMngr.Web
 
         /// <summary>Вернуть заявку по Id (admin, client)</summary>
         // [Authorize(Roles="admin, client")]
-        [HttpGet("{appId:int}")]
+        [HttpGet("{appId:int:min(1)}")]
         public async Task<ActionResult<AppDto>> GetApp(int appId)
         {
             var query = new GetAppByIdQuery(appId);
@@ -55,47 +50,15 @@ namespace AppMngr.Web
                 app);
         }
 
-
-
-
-
-
-
-
-
-        /// <summary>Изменение статуса заявки (admin)</summary>
-        /// <remarks>
-        /// Описание и примеры запросов:
-        ///
-        ///     Описание запроса:
-        ///     {
-        ///        "statusId": 1   // Id нового статуса, not null, required
-        ///     }
-        ///
-        ///     Пример:
-        ///     {
-        ///        "statusId": 1
-        ///     }
-        ///
-        /// </remarks>
-        /// <param name="appId">Id заявки</param>
-        /// <param name="doc"></param>
-        // PATCH api/apps/{id}/status
-        [Authorize(Roles="admin")]
-        [HttpPatch("apps/{appId:int}/status")]
-        public async Task<IActionResult> PatchStatus(int appId, JsonDocument doc)
+        /// <summary>Измененить статус заявки (admin)</summary>
+        // [Authorize(Roles="admin")]
+        [HttpPatch("{appId:int:min(1)}/status")]
+        public async Task<ActionResult> PatchStatus(int appId, UpdateAppStatusCommand command)
         {
-            try
-            {
-                await CommandAggregator.ChangeStatusInAppAsync(appId, doc);
+            command.AppId = appId;
 
-                var app = await Apps.GetDTOByIdAsync(appId);
-                return Ok(app);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

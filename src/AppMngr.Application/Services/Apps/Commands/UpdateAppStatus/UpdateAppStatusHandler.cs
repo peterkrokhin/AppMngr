@@ -31,6 +31,12 @@ namespace AppMngr.Application
                 throw new StatusNotFoundException($"Статус с Id={command.StatusId} не найден."); 
             }
 
+            if (status.AppTypeId != app.AppTypeId)
+            {
+                throw new NotEqualAppTypeException($"Тип заявки Id={status.AppTypeId} у статуса Id={status.Id} " +
+                    $"и тип заявки Id={app.AppTypeId} у заявки Id={app.Id} не совпдадают.");
+            }
+
             app.StatusId = command.StatusId;
             _apps.Update(app);
 

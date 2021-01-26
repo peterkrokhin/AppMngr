@@ -6,7 +6,6 @@ namespace AppMngr.Application
     {
         public UpdateAppStatusValidator()
         {
-            RuleFor(p => p.AppId).GreaterThan(0);
             RuleFor(p => p.StatusId).GreaterThan(0);
         }
     }
