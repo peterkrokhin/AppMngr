@@ -22,7 +22,7 @@ namespace AppMngr.Application
 
             if (status == null)
             {
-                throw new StatusNotFoundException($"Статус с Id={query.Id} не найдена.");
+                throw new StatusNotFoundException($"Статус с Id={query.Id} не найден.");
             }
             
             var statusDto = _mapper.Map<StatusDto>(status);
