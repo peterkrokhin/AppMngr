@@ -6,7 +6,6 @@
         public string Value { get; set; }
         
         public int AppTypeId { get; set; }
-        public AppType Type { get; set; }
-        
+        public AppType Type { get; set; }  
     }
 }

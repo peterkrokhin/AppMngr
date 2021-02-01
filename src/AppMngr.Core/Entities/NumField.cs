@@ -7,6 +7,5 @@
         
         public int AppTypeId { get; set; }
         public AppType Type { get; set; }
-        
     }
 }

@@ -12,8 +12,6 @@ namespace AppMngr.Core
         public IEnumerable<TimeField> TimeFields { get; set; }
         public IEnumerable<FileField> FileFields { get; set; }
         public IEnumerable<Status> Statuses { get; set; }
-        public IEnumerable<App> Apps { get; set; }
-
-        
+        public IEnumerable<App> Apps { get; set; }  
     }
 }
