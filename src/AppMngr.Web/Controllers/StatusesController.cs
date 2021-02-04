@@ -43,10 +43,10 @@ namespace AppMngr.Web
 
         /// <summary>Измененить статус (admin)</summary>
         // [Authorize(Roles="admin")]
-        [HttpPatch("{StatusId:int:min(1)}")]
-        public async Task<ActionResult> PatchStatus(int StatusId, UpdateStatusCommand command)
+        [HttpPatch("{statusId:int:min(1)}")]
+        public async Task<ActionResult> PatchStatus(int statusId, UpdateStatusCommand command)
         {
-            command.Id = StatusId;
+            command.Id = statusId;
 
             await _mediator.Send(command);
             return NoContent();
