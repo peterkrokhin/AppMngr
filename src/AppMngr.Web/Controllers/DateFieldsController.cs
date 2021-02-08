@@ -41,7 +41,7 @@ namespace AppMngr.Web
                 dateField);
         }
 
-        /// <summary>Измененить поле с типом дата(admin)</summary>
+        /// <summary>Измененить поле с типом дата (admin)</summary>
         // [Authorize(Roles="admin")]
         [HttpPatch("{dateFieldId:int:min(1)}")]
         public async Task<ActionResult> PatchDateField(int dateFieldId, UpdateDateFieldCommand command)
