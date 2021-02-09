@@ -1,12 +1,9 @@
-﻿using System;
-using AppMngr.Core;
-
-namespace AppMngr.Application
+﻿namespace AppMngr.Application
 {
-    public class UserDTO
+    public class UserDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Role Role { get; set; }
+        public RoleDto Role { get; set; }
     }
 }

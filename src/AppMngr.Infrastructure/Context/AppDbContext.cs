@@ -18,7 +18,7 @@ namespace AppMngr.Infrastructure
         public DbSet<NumField> NumFields { get; set; }
         public DbSet<DateField> DateFields { get; set; }
         public DbSet<TimeField> TimeFields { get; set; }
-        public DbSet<FileField> FileFields { get; set; }
+        public DbSet<FileMetaData> FileMetaData { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)

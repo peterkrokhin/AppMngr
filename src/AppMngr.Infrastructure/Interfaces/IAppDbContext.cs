@@ -16,7 +16,7 @@ namespace AppMngr.Infrastructure
         DbSet<NumField> NumFields { get; set; }
         DbSet<DateField> DateFields { get; set; }
         DbSet<TimeField> TimeFields { get; set; }
-        DbSet<FileField> FileFields { get; set; }
+        DbSet<FileMetaData> FileMetaData { get; set; }
 
         DbSet<T> Set<T>() where T : class;
         Task<int> SaveChangesAsync();

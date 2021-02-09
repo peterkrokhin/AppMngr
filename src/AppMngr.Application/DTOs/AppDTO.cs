@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace AppMngr.Application
+﻿namespace AppMngr.Application
 {
-    public class AppDTO
+    public class AppDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

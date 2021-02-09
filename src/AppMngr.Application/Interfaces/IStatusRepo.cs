@@ -6,6 +6,5 @@ namespace AppMngr.Application
 {
     public interface IStatusRepo : IGenericRepo<Status>
     {
-        Task<IEnumerable<Status>> GetAllByAppTypeIdAsync(int requestTypeId);
     }  
 }

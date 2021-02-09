@@ -1,10 +1,9 @@
-using AppMngr.Core;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System;
 using AppMngr.Application;
+using AppMngr.Core;
 
 namespace AppMngr.Infrastructure
 {
@@ -20,17 +19,6 @@ namespace AppMngr.Infrastructure
                 .Include(u => u.Role)
                 .Where(u => u.Name == name & u.PwdHash == pwdHash)
                 .FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<UserDTO>> GetAllDTOAsync()
-        {
-            return await DbSet
-                .Select(u => new UserDTO{
-                    Id = u.Id,
-                    Name = u.Name,
-                    Role = u.Role,
-                })
-                .ToListAsync();
         }
 
         public async Task<User> GetByIdIncludeRoleAsync(int id)

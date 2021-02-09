@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using AppMngr.Application;
 
-
 namespace AppMngr.Infrastructure
 {
     public static class ServicesExtensionInfrastructure
@@ -17,12 +16,10 @@ namespace AppMngr.Infrastructure
             services.AddScoped<IStringFieldRepo, StringFieldRepo>();
             services.AddScoped<IDateFieldRepo, DateFieldRepo>();
             services.AddScoped<ITimeFieldRepo, TimeFieldRepo>();
-            services.AddScoped<IFileFieldRepo, FileFieldRepo>();
+            services.AddScoped<IFileMetaDataRepo, FileMetaDataRepo>();
             services.AddScoped<IRoleRepo, RoleRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IUOW, UOW>();
-            services.AddScoped<ICommandAggregator, CommandAggregator>();
-          
         }
     }
 }

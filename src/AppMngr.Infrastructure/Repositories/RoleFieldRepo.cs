@@ -1,10 +1,5 @@
-using AppMngr.Core;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using System;
 using AppMngr.Application;
+using AppMngr.Core;
 
 namespace AppMngr.Infrastructure
 {
