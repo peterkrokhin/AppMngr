@@ -4,7 +4,7 @@ using AppMngr.Core;
 
 namespace AppMngr.Application
 {
-    public interface IFileFieldRepo : IGenericRepo<FileField>
+    public interface IFileMetaDataRepo : IGenericRepo<FileMetaData>
     {
 
     }

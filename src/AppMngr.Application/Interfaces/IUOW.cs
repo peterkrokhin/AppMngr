@@ -11,7 +11,7 @@ namespace AppMngr.Application
         INumFieldRepo NumFields { get; set; }
         IDateFieldRepo DateFields { get; set; }
         ITimeFieldRepo TimeFields { get; set; }
-        IFileFieldRepo FileFields { get; set; }
+        IFileMetaDataRepo FileFields { get; set; }
         IStatusRepo Statuses { get; set; }
         IAppRepo Apps { get; set; }
         IRoleRepo Roles { get; set; }

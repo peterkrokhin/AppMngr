@@ -10,7 +10,7 @@ namespace AppMngr.Core
         public IEnumerable<StringField> StringFields { get; set; }
         public IEnumerable<DateField> DateFields { get; set; }
         public IEnumerable<TimeField> TimeFields { get; set; }
-        public IEnumerable<FileField> FileFields { get; set; }
+        public IEnumerable<FileMetaData> FileMetaData { get; set; }
         public IEnumerable<Status> Statuses { get; set; }
         public IEnumerable<App> Apps { get; set; }  
     }

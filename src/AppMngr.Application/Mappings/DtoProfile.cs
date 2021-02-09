@@ -10,7 +10,7 @@ namespace AppMngr.Application
             CreateMap<App, AppDto>();
             CreateMap<AppType, AppTypeDto>();
             CreateMap<DateField, DateFieldDto>();
-            CreateMap<FileField, FileFieldDto>();
+            CreateMap<FileMetaData, FileMetaDataDto>();
             CreateMap<NumField, NumFieldDto>();
             CreateMap<Role, RoleDto>();
             CreateMap<Status, StatusDto>();
