@@ -10,11 +10,11 @@ namespace AppMngr.Web
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Route("api/[controller]")]
-    public class AppController : ControllerBase
+    public class AppsController : ControllerBase
     {
         private IMediator _mediator; 
 
-        public AppController(IMediator mediator)
+        public AppsController(IMediator mediator)
         {
             _mediator = mediator;
         }
