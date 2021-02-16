@@ -4,7 +4,7 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 
-namespace ClinicSchedule.Application
+namespace AppMngr.Application
 {
     public static class ServiceCollectionExtensions
     {

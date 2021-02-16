@@ -19,7 +19,6 @@ using Microsoft.OpenApi.Models;
 
 using System.Reflection;
 using System.IO;
-using ClinicSchedule.Application;
 using FluentValidation.AspNetCore;
 
 namespace AppMngr.Web
@@ -44,6 +43,8 @@ namespace AppMngr.Web
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection"); 
             services.AddAppInfrastructure(connectionString);
+            
+            services.AddWebLayerServices();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
