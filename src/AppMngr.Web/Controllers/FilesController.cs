@@ -30,7 +30,7 @@ namespace AppMngr.Web
         public async Task<IActionResult> GetFile(int fileId)
         {
             var fileContent = await _fileGettingService.GetFile(fileId);
-            return File(fileContent.MemoryStream, fileContent.ContentType, fileContent.FullName);
+            return File(fileContent.MemoryStream, fileContent.ContentType, fileContent.FileName);
         }
 
         /// <summary>Получить метаданные файла по id (admin)</summary>

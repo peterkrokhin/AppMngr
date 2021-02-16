@@ -6,13 +6,13 @@ namespace AppMngr.Web
     {
         public MemoryStream MemoryStream { get; private set; }
         public string ContentType { get; private set; }
-        public string FullName { get; private set; }
+        public string FileName { get; private set; }
 
-        public FileContent(MemoryStream memoryStream, string contentType, string fullName)
+        public FileContent(MemoryStream memoryStream, string contentType, string fileName)
         {
             MemoryStream = memoryStream;
             ContentType = contentType;
-            FullName = fullName;
+            FileName = fileName;
         }
     }
 }

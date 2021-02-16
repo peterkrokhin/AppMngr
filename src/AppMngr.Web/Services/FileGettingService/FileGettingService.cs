@@ -24,18 +24,20 @@ namespace AppMngr.Web
             var query = new GetFileMetaDataByIdQuery(fileId);
             var fileMetaData = await _mediator.Send(query);
 
+            var fileName = GenerateFileNameFromFileMetaData(fileMetaData);
             var fullFileName = GetFullFileName(fileMetaData);
             var memoryStream = await GetMemoryStream(fullFileName);
+
             var contentType = GetContentType(fullFileName);
 
-            var fileContent = new FileContent(memoryStream, contentType, fullFileName);
+            var fileContent = new FileContent(memoryStream, contentType, fileName);
             
             return fileContent;
         }
 
         private string GenerateFileNameFromFileMetaData(FileMetaDataDto fileMetaData)
         {
-            return $"{_fileStorageSettings.FileNamePrefix}_{fileMetaData.Id}";
+            return _fileStorageSettings.FileNamePrefix + fileMetaData.Id;
         }
 
         private string GetFullFileName(FileMetaDataDto fileMetaData)

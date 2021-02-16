@@ -78,7 +78,7 @@ namespace AppMngr.Web
 
         private string GenerateFileName(int fileId)
         {
-            return _fileStorageSettings.FileNamePrefix + $"{fileId}" + _file.FileName + _extension;
+            return _fileStorageSettings.Path + _fileStorageSettings.FileNamePrefix + $"{fileId}" + _extension;
         }
     }
 }
