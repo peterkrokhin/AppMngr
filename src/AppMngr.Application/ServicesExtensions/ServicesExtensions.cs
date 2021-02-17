@@ -6,9 +6,9 @@ using MediatR;
 
 namespace AppMngr.Application
 {
-    public static class ServiceCollectionExtensions
+    public static class ServicesExtensions
     {
-        public static void AddAppServices(this IServiceCollection services)
+        public static void AddApplicationLayerServices(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

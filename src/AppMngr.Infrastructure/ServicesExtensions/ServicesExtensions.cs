@@ -4,9 +4,9 @@ using AppMngr.Application;
 
 namespace AppMngr.Infrastructure
 {
-    public static class ServicesExtensionInfrastructure
+    public static class ServicesExtensions
     {
-        public static void AddAppInfrastructure(this IServiceCollection services, string connectionString)
+        public static void AddInfrastructureLayerServices(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<IAppDbContext, AppDbContext>(options => options.UseSqlite(connectionString));
             services.AddScoped<IAppRepo, AppRepo>();
