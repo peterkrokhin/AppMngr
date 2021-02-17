@@ -1,37 +1,32 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
-using AppMngr.Application;
-using Microsoft.Extensions.Logging;
-using System.Text.Json;
-
-using AppMngr.Core;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
+using System.Text;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
-using System.Text;
-
+using Microsoft.IdentityModel.Tokens;
+using AppMngr.Application;
+using AppMngr.Core;
 
 namespace AppMngr.Web
 {
     [ApiController]
-    [Route("api/")]
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Route("api/[controller]")]
     public class TokenController : Controller
     {
         IConfiguration Configuration { get; set; }
         IUserRepo Users { get; set; }
+        private JwtConfiguration _jwtConfiguration;
 
         public TokenController(IConfiguration configuration, IUserRepo users)
         {  
             Users = users;
             Configuration = configuration;
+            _jwtConfiguration = new JwtConfiguration(configuration);
         }
 
         /// <summary>Получение токена</summary>
@@ -57,49 +52,18 @@ namespace AppMngr.Web
         ///     }  
         /// </remarks>
         // POST api/token  
-        [HttpPost("token")]
-        public async Task<IActionResult> Token(JsonDocument doc)
+        [HttpPost]
+        public async Task<IActionResult> Token(AuthUser authUser)
         {
-            try
-            {
-                JsonElement root = doc.RootElement;
-                string name = root.GetProperty("name").GetString();
-                string pwd = root.GetProperty("pwd").GetString();
+            var user = await GetUserByNameAndPwd(authUser);
 
-                ClaimsIdentity identity = await TryGetIdentityAsync(name, pwd);
-                
-                var now = DateTime.UtcNow;
-                
-                // Получаем JWT
-                var jwt = new JwtSecurityToken(
-                        issuer: Configuration["JWT:Issuer"],
-                        audience: Configuration["JWT:Audience"],
-                        notBefore: now,
-                        claims: identity.Claims,
-                        expires: now.Add(TimeSpan.FromMinutes(double.Parse(Configuration["JWT:LifeTime"]))),
-                        signingCredentials: 
-                            new SigningCredentials(
-                                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Key"])), SecurityAlgorithms.HmacSha256));
-                
-                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-    
-                return Ok(new {token = encodedJwt, name = identity.Name});
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            ClaimsIdentity identity = GetIdentity(user);
+
+            return Ok(new {token = CreateEncodedJwt(identity), name = identity.Name});
         }
  
-        private async Task<ClaimsIdentity> TryGetIdentityAsync(string name, string pwd)
+        private ClaimsIdentity GetIdentity(User user)
         {
-            string pwdHash = Utils.GetHashOrEmpty(pwd);
-            
-            User user = await Users.GetByNameAndPwdHash(name, pwdHash);
-            
-            if (user == null)
-                throw new Exception("Invalid user name or password");
-            
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
@@ -109,8 +73,46 @@ namespace AppMngr.Web
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);
             return claimsIdentity;
-            
         }
 
+        private string CreateEncodedJwt(ClaimsIdentity identity)
+        {
+            var now = DateTime.UtcNow;
+                
+            // Получаем JWT
+            var jwt = new JwtSecurityToken(
+                issuer: _jwtConfiguration.Issuer,
+                audience: _jwtConfiguration.Audience,
+                notBefore: now,
+                claims: identity.Claims,
+                expires: now.Add(_jwtConfiguration.LifeTime),
+                signingCredentials: CreateSigningCredentials());
+                
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return encodedJwt;
+        }
+
+        private SigningCredentials CreateSigningCredentials()
+        {
+            return new SigningCredentials(CreateSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256);
+        }
+
+        private SymmetricSecurityKey CreateSymmetricSecurityKey()
+        {
+            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Key));
+        }
+
+        private async Task<User> GetUserByNameAndPwd(AuthUser authUser)
+        {
+            string pwdHash = Utils.GetHashOrEmpty(authUser.Pwd);
+            
+            User user = await Users.GetByNameAndPwdHash(authUser.Name, pwdHash);
+            
+            if (user == null)
+                throw new Exception("Invalid user name or password");
+
+            return user;
+        } 
     }
 }

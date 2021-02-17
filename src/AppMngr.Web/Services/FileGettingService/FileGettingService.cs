@@ -10,12 +10,12 @@ namespace AppMngr.Web
 {
     public class FileGettingService : IFileGettingService
     {
-        private readonly FileStorageSettings _fileStorageSettings;
+        private readonly FileStorageConfiguration _fileStorageConfiguration;
         private readonly IMediator _mediator;
 
         public FileGettingService(IConfiguration configuration, IMediator mediator)
         {
-            _fileStorageSettings = new FileStorageSettings(configuration);
+            _fileStorageConfiguration = new FileStorageConfiguration(configuration);
             _mediator = mediator;
         }
 
@@ -37,12 +37,12 @@ namespace AppMngr.Web
 
         private string GenerateFileNameFromFileMetaData(FileMetaDataDto fileMetaData)
         {
-            return _fileStorageSettings.FileNamePrefix + fileMetaData.Id;
+            return _fileStorageConfiguration.FileNamePrefix + fileMetaData.Id;
         }
 
         private string GetFullFileName(FileMetaDataDto fileMetaData)
         {
-            string directoryName = _fileStorageSettings.Path;
+            string directoryName = _fileStorageConfiguration.Path;
             string fileName = GenerateFileNameFromFileMetaData(fileMetaData);
 
             string[] fullFileNamesInDirectory = Directory.GetFiles(directoryName, fileName + ".*");

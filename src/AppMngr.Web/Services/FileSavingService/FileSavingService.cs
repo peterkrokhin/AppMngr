@@ -10,14 +10,14 @@ namespace AppMngr.Web
 {
     public class FileSavingService : IFileSavingService
     {
-        private readonly FileStorageSettings _fileStorageSettings;
+        private readonly FileStorageConfiguration _fileStorageConfiguration;
         private readonly IMediator _mediator;
         private IFormFile _file;
         private string _extension;
      
         public FileSavingService(IConfiguration configuration, IMediator mediator)
         {
-            _fileStorageSettings = new FileStorageSettings(configuration);
+            _fileStorageConfiguration = new FileStorageConfiguration(configuration);
             _mediator = mediator;
         }
 
@@ -52,7 +52,7 @@ namespace AppMngr.Web
 
         private void CheckFileExtension()
         {
-            if (!_fileStorageSettings.PermittedExtensions.Contains(_extension))
+            if (!_fileStorageConfiguration.PermittedExtensions.Contains(_extension))
             {
                 throw new FileExtensionException("Недопустимое расширейние файла.");
             }
@@ -60,7 +60,7 @@ namespace AppMngr.Web
 
         private void CheckFileLength()
         {
-            if (_file.Length >= _fileStorageSettings.FileSizeLimit)
+            if (_file.Length >= _fileStorageConfiguration.FileSizeLimit)
             {
                 throw new FileLengthException("Недопустимый размер файла.");
             }
@@ -78,7 +78,7 @@ namespace AppMngr.Web
 
         private string GenerateFileName(int fileId)
         {
-            return _fileStorageSettings.Path + _fileStorageSettings.FileNamePrefix + $"{fileId}" + _extension;
+            return _fileStorageConfiguration.Path + _fileStorageConfiguration.FileNamePrefix + $"{fileId}" + _extension;
         }
     }
 }
