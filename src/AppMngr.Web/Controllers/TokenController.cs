@@ -1,9 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using MediatR;
 using AppMngr.Application;
-
 
 namespace AppMngr.Web
 {
@@ -23,13 +21,7 @@ namespace AppMngr.Web
 
         /// <summary>Получение токена</summary>
         /// <remarks>
-        /// Описание и примеры запросов:
-        ///
-        ///     Описание запроса:
-        ///     {
-        ///        "name": "UserName", // Имя пользователя, not null, required
-        ///        "pwd": "UserPwd"    // Пароль пользователя, not null, required
-        ///     }
+        /// Пользователи по умолчанию:
         ///
         ///     Администратор по умолчанию:
         ///     {

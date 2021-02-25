@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using MediatR;
 using AppMngr.Application;
 
@@ -19,7 +20,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть всех пользователей (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
@@ -28,7 +29,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть пользователя по Id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("{userId:int}")]
         public async Task<ActionResult<UserDto>> GetUser(int userId)
         {
@@ -37,7 +38,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить пользователя (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserCommand command)
         {

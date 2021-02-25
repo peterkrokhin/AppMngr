@@ -25,7 +25,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Получить файл по id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("{fileId}")]
         public async Task<IActionResult> GetFile(int fileId)
         {
@@ -34,7 +34,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Получить метаданные файла по id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("fileMetaData/{fileId}")]
         public async Task<ActionResult<FileMetaDataDto>> GetFileMetaData(int fileId)
         {
@@ -43,7 +43,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить новый файл на сервер (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult> AddFile(IFormFile file, [FromForm] int appTypeId)
         {

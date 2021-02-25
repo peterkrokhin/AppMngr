@@ -20,7 +20,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть поле с типом дата по id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("{dateFieldId}")]
         public async Task<ActionResult<IEnumerable<DateFieldDto>>> GetDateField(int dateFieldId)
         {
@@ -29,7 +29,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить новое поле с типом дата (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult<DateFieldDto>> CreateApp(CreateDateFieldCommand command)
         {
@@ -42,7 +42,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Измененить поле с типом дата (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPatch("{dateFieldId:int:min(1)}")]
         public async Task<ActionResult> PatchDateField(int dateFieldId, UpdateDateFieldCommand command)
         {

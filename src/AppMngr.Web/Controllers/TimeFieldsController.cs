@@ -20,7 +20,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть поле с типом время по id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("{timeFieldId}")]
         public async Task<ActionResult<IEnumerable<TimeFieldDto>>> GetTimeField(int timeFieldId)
         {
@@ -29,7 +29,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить новое поле с типом время (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult<TimeFieldDto>> CreateApp(CreateTimeFieldCommand command)
         {
@@ -42,7 +42,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Измененить поле с типом время (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPatch("{timeFieldId:int:min(1)}")]
         public async Task<ActionResult> PatchTimeField(int timeFieldId, UpdateTimeFieldCommand command)
         {

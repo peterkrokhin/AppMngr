@@ -20,7 +20,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть статус по id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("{statusId}")]
         public async Task<ActionResult<IEnumerable<StatusDto>>> GetStatus(int statusId)
         {
@@ -29,7 +29,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить новый статус (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult<StatusDto>> CreateApp(CreateStatusCommand command)
         {
@@ -42,7 +42,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Измененить статус (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPatch("{statusId:int:min(1)}")]
         public async Task<ActionResult> PatchStatus(int statusId, UpdateStatusCommand command)
         {

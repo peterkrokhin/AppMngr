@@ -20,7 +20,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть все заявки (admin, client)</summary>
-        // [Authorize(Roles="admin, client")]
+        [Authorize(Roles="admin, client")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppDto>>> GetApps()
         {
@@ -29,7 +29,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть заявку по Id (admin, client)</summary>
-        // [Authorize(Roles="admin, client")]
+        [Authorize(Roles="admin, client")]
         [HttpGet("{appId:int:min(1)}")]
         public async Task<ActionResult<AppDto>> GetApp(int appId)
         {
@@ -38,7 +38,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить новую заявку (client)</summary>
-        // [Authorize(Roles="client")]
+        [Authorize(Roles="client")]
         [HttpPost]
         public async Task<ActionResult<AppDto>> CreateApp(CreateAppCommand command)
         {
@@ -51,7 +51,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Измененить статус заявки (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPatch("{appId:int:min(1)}/status")]
         public async Task<ActionResult> PatchStatus(int appId, UpdateAppStatusCommand command)
         {

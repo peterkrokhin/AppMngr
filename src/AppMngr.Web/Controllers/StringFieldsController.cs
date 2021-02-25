@@ -20,7 +20,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть строковое поле по id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("{stringFieldId}")]
         public async Task<ActionResult<IEnumerable<StringFieldDto>>> GetStringField(int stringFieldId)
         {
@@ -29,7 +29,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить новое строковое поле (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult<StringFieldDto>> CreateApp(CreateStringFieldCommand command)
         {
@@ -42,7 +42,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Измененить строковое поле (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPatch("{stringFieldId:int:min(1)}")]
         public async Task<ActionResult> PatchStringField(int stringFieldId, UpdateStringFieldCommand command)
         {

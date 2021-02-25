@@ -20,7 +20,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть числовое поле по id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("{numFieldId}")]
         public async Task<ActionResult<IEnumerable<NumFieldDto>>> GetNumField(int numFieldId)
         {
@@ -29,7 +29,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить новое числовое поле (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult<NumFieldDto>> CreateApp(CreateNumFieldCommand command)
         {
@@ -42,7 +42,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Измененить числовое поле (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPatch("{numFieldId:int:min(1)}")]
         public async Task<ActionResult> PatchNumField(int numFieldId, UpdateNumFieldCommand command)
         {
