@@ -19,7 +19,7 @@ namespace AppMngr.Web
             _mediator = mediator;
         }
 
-        public async Task<FileContent> GetFile(int fileId)
+        public async Task<FileContent> GetFileContent(int fileId)
         {
             var query = new GetFileMetaDataByIdQuery(fileId);
             var fileMetaData = await _mediator.Send(query);

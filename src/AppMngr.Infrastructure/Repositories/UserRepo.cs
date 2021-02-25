@@ -13,7 +13,7 @@ namespace AppMngr.Infrastructure
         {
         }
 
-        public async Task<User> GetByNameAndPwdHash(string name, string pwdHash)
+        public async Task<User> GetByNameAndPasswordHashAsync(string name, string pwdHash)
         {
             return await DbSet
                 .Include(u => u.Role)

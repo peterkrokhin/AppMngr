@@ -6,8 +6,8 @@ namespace AppMngr.Application
     {
         public CreateUserCommandValidator()
         {
-            RuleFor(p => p.Name).NotNull().MinimumLength(3);
-            RuleFor(p => p.Pwd).NotNull().MinimumLength(6);
+            RuleFor(p => p.Name).NotNull().Length(3, 100);
+            RuleFor(p => p.Pwd).NotNull().Length(6, 100);
             RuleFor(p => p.RoleId).GreaterThan(0);
         }
     }

@@ -29,7 +29,7 @@ namespace AppMngr.Web
         [HttpGet("{fileId}")]
         public async Task<IActionResult> GetFile(int fileId)
         {
-            var fileContent = await _fileGettingService.GetFile(fileId);
+            var fileContent = await _fileGettingService.GetFileContent(fileId);
             return File(fileContent.MemoryStream, fileContent.ContentType, fileContent.FileName);
         }
 

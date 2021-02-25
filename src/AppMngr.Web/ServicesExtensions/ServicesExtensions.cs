@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using FluentValidation.AspNetCore;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace AppMngr.Web
@@ -15,11 +16,13 @@ namespace AppMngr.Web
     {
         public static void AddWebLayerServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation();
 
             services.AddScoped<IFileSavingService, FileSavingService>();
 
             services.AddScoped<IFileGettingService, FileGettingService>();
+
+            services.AddScoped<IGetTokenService, GetTokenService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>

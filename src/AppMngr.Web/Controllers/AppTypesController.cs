@@ -20,7 +20,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть все типы заявок (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppTypeDto>>> GetAppTypes()
         {
@@ -29,7 +29,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Вернуть тип заявки по Id (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpGet("{appTypeId:int:min(1)}")]
         public async Task<ActionResult<AppTypeDto>> GetAppType(int appTypeId)
         {
@@ -38,7 +38,7 @@ namespace AppMngr.Web
         }
 
         /// <summary>Добавить новый тип заявки (admin)</summary>
-        // [Authorize(Roles="admin")]
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<ActionResult<AppTypeDto>> CreateAppType(CreateAppTypeCommand command)
         {

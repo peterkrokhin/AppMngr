@@ -6,7 +6,7 @@ namespace AppMngr.Application
 {
     public interface IUserRepo : IGenericRepo<User>
     {
-        Task<User> GetByNameAndPwdHash(string name, string pwdHash);
+        Task<User> GetByNameAndPasswordHashAsync(string name, string pwdHash);
         Task<User> GetByIdIncludeRoleAsync(int id);
         Task<IEnumerable<User>> GetAllIncludeRoleAsync();
     }
